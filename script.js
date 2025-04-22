@@ -19,12 +19,15 @@ async function getCrimeData(minLat, maxLat, minLng, maxLng) {
         results.push({
             'date': date,
             'html': `
-                <div class="resultBox crime">
-                    <h2>${row_data.StatDesc}</h2>
-                    <p>${row_data.UCRdesc}</p>
-                    <div class="typeBox">
-                        <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
-                        <p>${row_data.Address_Public}</p>
+                <div class="resultBox">
+                    <div class="resultLabel crime">Crime</div>
+                        <div class="result">
+                        <h2>${row_data.StatDesc}</h2>
+                        <p>${row_data.UCRdesc}</p>
+                        <div class="typeBox">
+                            <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
+                            <p>${row_data.Address_Public}</p>
+                        </div>
                     </div>
                 </div>
             `
@@ -47,11 +50,14 @@ async function get311Data(minLat, maxLat, minLng, maxLng) {
         results.push({
             'date': date,
             'html': `
-                <div class="resultBox request">
-                    <h2>${row_data.service_name}</h2>
-                    <p>${row_data.service_request_id}</p>
-                    <div class="typeBox">
-                        <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
+                <div class="resultBox">
+                    <div class="resultLabel request">311 Request</div>
+                    <div class="result">
+                        <h2>${row_data.service_name}</h2>
+                        <p>${row_data.service_request_id}</p>
+                        <div class="typeBox">
+                            <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
+                        </div>
                     </div>
                 </div>
             `
@@ -74,12 +80,15 @@ async function getPoliceData(minLat, maxLat, minLng, maxLng) {
         results.push({
             'date': date,
             'html': `
-                <div class="resultBox police">
-                    <h2>${row_data.typ_eng}</h2>
-                    <p>${row_data.first_dispo_eng}</p>
-                    <div class="typeBox">
-                        <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
-                        <p>${row_data.address}</p>
+                <div class="resultBox">
+                    <div class="resultLabel police">Police Call</div>
+                    <div class="result">
+                        <h2>${row_data.typ_eng}</h2>
+                        <p>${row_data.first_dispo_eng}</p>
+                        <div class="typeBox">
+                            <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
+                            <p>${row_data.address}</p>
+                        </div>
                     </div>
                 </div>
             `
@@ -102,12 +111,15 @@ async function getFireData(minLat, maxLat, minLng, maxLng) {
         results.push({
             'date': date,
             'html': `
-                <div class="resultBox fire">
-                    <h2>${row_data.typ_eng}</h2>
-                    <p>${row_data.first_dispo_eng}</p>
-                    <div class="typeBox">
-                        <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
-                        <p>${row_data.address}</p>
+                <div class="resultBox">
+                    <div class="resultLabel fire">Fire Call</div>
+                    <div class="result">
+                        <h2>${row_data.typ_eng}</h2>
+                        <p>${row_data.first_dispo_eng}</p>
+                        <div class="typeBox">
+                            <p>${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</p>
+                            <p>${row_data.address}</p>
+                        </div>
                     </div>
                 </div>
             `
