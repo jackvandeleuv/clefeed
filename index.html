@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Clefeed</title>
     <link 
         rel="stylesheet" 
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -13,10 +13,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <input type="range" min="50" max="300" value="100" class="slider" id="radiusSelector">
+    <header>
+        <h1>
+            CLEFEED
+        </h1>
+    </header>
+    <div class="sliderBox">
+        <h3>Radius</h3>
+        <input type="range" min="50" max="300" value="120" class="slider" id="radiusSelector">
+    </div>
     <div class="mainPanel">
         <div id="map" class="map"></div>
-        <div id="resultContainer" class="resultContainer"></div>
+        <div id="resultContainer" class="resultContainer">
+            <div class="buttonContainer">
+                <button id="allButton" class="activeButton">All</button>
+                <button id="crimeButton">Crime</button>
+                <button id="policeButton">Police Call</button>
+                <button id="fireButton">Fire Call</button>
+                <button id="requestButton">311</button>
+            </div>
+            <div id="resultBoxContainer" class="resultBoxContainer"></div>
+        </div>
     </div>
     
     <script 

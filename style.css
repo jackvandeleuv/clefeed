@@ -8,6 +8,13 @@ html, body {
     flex-direction: column;
 }
 
+header {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
 p {
     font-size: medium;
     margin: 0px;
@@ -40,21 +47,54 @@ h5 {
 }
 
 .map {
-    height: 500px;
-    min-width: 500px;
+    height: 100%;
+    min-width: 70%;
 }
 
 .mainPanel {
     display: flex;
     flex-direction: row;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+    height: 80%;
+}
+
+button {
+    flex-grow: 1;
+    font-size: large;
+    background-color: rgb(252, 233, 233);
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.activeButton {
+    color: white;
+    background-color: grey;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+    gap: 4px;
 }
 
 .resultContainer {
+    margin-left: 10px;
+    width: 30%;
+    height: 100%;
+}
+
+.resultBoxContainer {
+    overflow-y: scroll;
+    height: 100%;
     display: flex; 
     flex-direction: column; 
     gap: 4px;
-    overflow-y: scroll;
-    margin-left: 10px;
 }
 
 .resultBox {
@@ -97,4 +137,16 @@ h5 {
     display: flex; 
     flex-direction: row; 
     justify-content: space-between;
+}
+
+/* Slider box */
+
+.sliderBox {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+    gap: 5px;
 }
