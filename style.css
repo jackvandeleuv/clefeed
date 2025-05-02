@@ -83,8 +83,14 @@ button {
     gap: 4px;
 }
 
+.popup {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
 .resultContainer {
-    margin-left: 10px;
+    margin-right: 10px;
     width: 30%;
     height: 100%;
 }

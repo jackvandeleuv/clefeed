@@ -12,8 +12,17 @@ async function getCrimeData(minLat, maxLat, minLng, maxLng) {
         results.push({
             date: date,
             longitude: row.geometry.x,
-            latitude: row.geometry.y,
-            label: `${row_data.StatDesc} | ${row_data.UCRdesc} | ${row_data.Address_Public}`,
+            latitude: row.geometry.y,            
+            label: `
+                <div class="popup">
+                    <h2>${row_data.UCRdesc}</h2>
+                    <h4>${row_data.Statute}<h4>
+                    <h4>${row_data.StatDesc}<h4>
+                    <h4>${row_data.Address_Public}<h4>
+                    <h4>Offense Date: ${date}</h4>
+                    <h4>Reported Date: ${new Date(row_data.ReportedDate)}<h4>
+                </div>
+            `,
             color: 'rgb(255, 185, 111)',
             html: `
                 <div class="resultBox">
@@ -34,7 +43,7 @@ async function getCrimeData(minLat, maxLat, minLng, maxLng) {
 }
 
 async function get311Data(minLat, maxLat, minLng, maxLng) {
-    const url = `https://services3.arcgis.com/dty2kHktVXHrqO8i/arcgis/rest/services/Data_311/FeatureServer/0/query?where=1%3D1&outFields=service_request_id,requested_datetime,service_name&geometry=${minLng}%2C${minLat}%2C${maxLng}%2C${maxLat}&geometryType=esriGeometryEnvelope&orderByFields=requested_datetime+DESC&inSR=4326&spatialRel=esriSpatialRelIntersects&resultRecordCount=100&outSR=4326&f=json`;
+    const url = `https://services3.arcgis.com/dty2kHktVXHrqO8i/arcgis/rest/services/Data_311/FeatureServer/0/query?where=1%3D1&outFields=service_request_id,status_description,source,address,requested_datetime,service_name&geometry=${minLng}%2C${minLat}%2C${maxLng}%2C${maxLat}&geometryType=esriGeometryEnvelope&orderByFields=requested_datetime+DESC&inSR=4326&spatialRel=esriSpatialRelIntersects&resultRecordCount=100&outSR=4326&f=json`;
     
     const response = await fetch(url);
     const data = await response.json();
@@ -47,8 +56,16 @@ async function get311Data(minLat, maxLat, minLng, maxLng) {
         results.push({
             date: date,
             longitude: row.geometry.x,
-            latitude: row.geometry.y,
-            label: `${row_data.service_name} | ${row_data.service_request_id}`,
+            latitude: row.geometry.y,   
+            label: `
+                <div class="popup">
+                    <h2>${row_data.service_name}</h2>
+                    <h4>${row_data.address}<h4>
+                    <h4>${date}</h4>
+                    <h4>Status: ${row_data.status_description}</h4>
+                    <h4>Source: ${row_data.source}</h4>
+                </div>
+            `,
             color: 'rgb(50, 252, 175)',
             html: `
                 <div class="resultBox">
@@ -81,8 +98,15 @@ async function getPoliceData(minLat, maxLat, minLng, maxLng) {
         results.push({
             date: date,
             longitude: row.geometry.x,
-            latitude: row.geometry.y,
-            label: `${row_data.typ_eng} | ${row_data.first_dispo_eng} | ${row_data.address}`,
+            latitude: row.geometry.y,   
+            label: `
+                <div class="popup">
+                    <h2>${row_data.typ_eng} | ${row_data.sub_eng}</h2>
+                    <h4>${row_data.first_dispo_eng}</h4>
+                    <h4>${row_data.address}<h4>
+                    <h4>${date}</h4>
+                </div>
+            `,
             color: 'rgb(140, 184, 250)',
             html: `
                 <div class="resultBox">
@@ -113,11 +137,20 @@ async function getFireData(minLat, maxLat, minLng, maxLng) {
     for (const row of data.features) {
         const row_data = row.attributes;
         const date = new Date(row_data.call_datetime);
+        // longitude: row.geometry.x + ((Math.random() - 0.5) * 0.00024),
+        // latitude: row.geometry.y + ((Math.random() - 0.5) * 0.00018),  
         results.push({
             longitude: row.geometry.x,
-            latitude: row.geometry.y,
+            latitude: row.geometry.y,  
             date: date,
-            label: `${row_data.typ_eng} | ${row_data.first_dispo_eng} | ${row_data.address}`,
+            label: `
+                <div class="popup">
+                    <h2>${row_data.typ_eng} | ${row_data.sub_eng}</h2>
+                    <h4>${row_data.first_dispo_eng}</h4>
+                    <h4>${row_data.address}<h4>
+                    <h4>${date}</h4>
+                </div>
+            `,
             color: 'rgb(250, 140, 140)',
             html: `
                 <div class="resultBox">
@@ -139,6 +172,7 @@ async function getFireData(minLat, maxLat, minLng, maxLng) {
 
 async function updateResults() {
     if (lat === -1 || lon === -1) return;
+    for (const marker of markers) marker.remove();
 
     const resultContainer = document.getElementById('resultBoxContainer');
     const radiusSelector = document.getElementById('radiusSelector');
@@ -172,9 +206,8 @@ async function updateResults() {
 
     const flatResults = results.flat();
     flatResults.sort((a, b) => b.date - a.date);
-    const topFlatResults = flatResults.slice(0, 50);
+    const topFlatResults = flatResults.slice(0, 30);
 
-    for (const marker of markers) marker.remove();
     for (const result of topFlatResults) {
         const marker = L.marker(
             [result.latitude, result.longitude], 
@@ -221,7 +254,8 @@ async function addButtonAction(event) {
 }
 
 
-const map = L.map('map').setView([41.497335, -81.700197], 16);
+const map = L.map('map').setView([41.482505, -81.712028], 16);
+
 let circle = null;
 
 const markers = [];
